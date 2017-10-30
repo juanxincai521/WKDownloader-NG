@@ -1,0 +1,21 @@
+<seelog type="asynctimer" asyncinterval="5000000" minlevel="debug" maxlevel="error">
+    <outputs>
+        <splitter formatid="common">
+            <filter levels="info,warn,debug">
+                <rollingfile type="date" datepattern="2006-01-02" filename="../logs/common.log" maxrolls="5"/>
+            </filter>
+            <filter levels="info,warn">
+                <console />
+            </filter>
+        </splitter>
+        <splitter formatid="msg">
+            <filter levels="error">
+                <rollingfile type="date" datepattern="2006-01-02" filename="../logs/error.log"/>
+            </filter>
+        </splitter>
+    </outputs>
+    <formats>
+        <format id="common" format="[%Level] %Date(15:04:05) %Msg%n" />
+        <format id="msg" format="%Msg%n" />
+    </formats>
+</seelog>
