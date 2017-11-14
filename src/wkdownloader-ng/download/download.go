@@ -59,7 +59,7 @@ func downloadBook(no int, ext string) {
 		if err != nil {
 			seelog.Warnf("%d.%s，尝试第%d次失败，错误原因：%s", no, ext, i, err.Error())
 		} else {
-			seelog.Debugf("%d.%s，尝试第%d次，下载成功，url：%s", no, ext, i, url)
+			seelog.Infof("%d.%s，尝试第%d次，下载成功，url：%s", no, ext, i, url)
 			return
 		}
 	}
@@ -80,7 +80,7 @@ func downloadImg(bookNo int, chapterNo int, img *data.Img) {
 		if err != nil {
 			seelog.Warnf("%s，尝试第%d次失败，错误原因：%s", filePath, i, err.Error())
 		} else {
-			seelog.Debugf("%s，尝试第%d次，下载成功", filePath, i)
+			seelog.Infof("%s，尝试第%d次，下载成功", filePath, i)
 			return
 		}
 	}

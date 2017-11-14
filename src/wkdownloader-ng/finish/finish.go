@@ -110,9 +110,9 @@ func packageIndexAndClean(timeString string) error {
 			return err
 		}
 		fw.Write(in)
-		seelog.Debug("归档图片成功")
+		seelog.Debug("归档index.htm成功")
 	}
-	seelog.Debug("建立index.htm压缩包：" + data.TempPath + "/index/" + timeString + ".zip")
+	seelog.Info("建立index.htm压缩包：" + data.TempPath + "/index/" + timeString + ".zip")
 	jsonDir, err4 := ioutil.ReadDir(data.TempPath + "/index")
 	if err4 != nil {
 		return err4

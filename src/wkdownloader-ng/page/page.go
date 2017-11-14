@@ -31,7 +31,7 @@ func downloadPage(no int) {
 	defer pool.Done()
 	bookNo := newPageInfo[no].BookNo
 	chapterNo := no
-	seelog.Debugf("开始下载%d.htm，编号%d", chapterNo, bookNo)
+	seelog.Tracef("开始下载%d.htm，编号%d", chapterNo, bookNo)
 	a := bookNo / 1000
 	url := fmt.Sprintf("http://www.wenku8.com/novel/%d/%d/%d.htm", a, bookNo, chapterNo)
 	filePath := fmt.Sprintf("%s/%s/%d/%d.htm", data.TempPath, "page", bookNo, chapterNo)
@@ -42,7 +42,7 @@ func downloadPage(no int) {
 			newPage, _ := newPageInfo[chapterNo]
 			if ok {
 				if lastPage.ChapterName == newPage.ChapterName && lastPage.BookName == newPage.BookName {
-					seelog.Debugf("跳过下载%d.htm，编号%d", chapterNo, bookNo)
+					seelog.Tracef("跳过下载%d.htm，编号%d", chapterNo, bookNo)
 					return
 				}
 			}
@@ -87,7 +87,7 @@ func parsePages(bookNo int) {
 }
 
 func parsePage(bookNo int, chapterNo int) {
-	seelog.Debugf("开始解析%d.htm，编号%d", chapterNo, bookNo)
+	seelog.Tracef("开始解析%d.htm，编号%d", chapterNo, bookNo)
 	filePath := fmt.Sprintf("%s/%s/%d/%d.htm", data.TempPath, "page", bookNo, chapterNo)
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -123,7 +123,7 @@ func parsePage(bookNo int, chapterNo int) {
 			mutex.Lock()
 			defer mutex.Unlock()
 			data.NewData.CopyrightChapters[chapterNo] = page
-			seelog.Debugf("解析%d.htm成功，编号%d", chapterNo, bookNo)
+			seelog.Tracef("解析%d.htm成功，编号%d", chapterNo, bookNo)
 			return
 		}
 	}

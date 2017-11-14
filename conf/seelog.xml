@@ -2,7 +2,7 @@
     <outputs>
         <splitter formatid="common">
             <filter levels="info,warn,debug">
-                <rollingfile type="date" datepattern="2006-01-02" filename="../logs/common.log" maxrolls="5"/>
+                <rollingfile type="date" datepattern="2006-01-02" filename="../logs/common.log" maxrolls="5" fullname="true" />
             </filter>
             <filter levels="info,warn">
                 <console />
