@@ -290,6 +290,6 @@ func packCBZ(chapterNo int, volumeName, chapterName, bookDataPath, chapterTempPa
 		fw.Write(in)
 		seelog.Debug("归档图片成功")
 	}
-	seelog.Info("归档图片成功："+cbzName)
+	seelog.Info("归档图片成功："+ bookDataPath + "/" + cbzName)
 	return nil
 }
