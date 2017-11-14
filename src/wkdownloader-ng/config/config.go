@@ -25,16 +25,17 @@ func parseBookList() error {
 	buf := bufio.NewReader(f)
 	for {
 		line, err := buf.ReadString('\n')
-		line = strings.TrimSpace(line)
 		if err != nil {
 			if err == io.EOF {
 				return nil
 			}
 			return err
 		}
+		line = strings.TrimSpace(line)		
 		no, err2 := strconv.Atoi(line)
 		if err2 != nil {
-			return err2
+			seelog.Warn("解析列表异常："+err2.Error())
+			continue
 		}
 		data.BookList = append(data.BookList, no)
 	}
