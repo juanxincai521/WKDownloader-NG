@@ -288,7 +288,8 @@ func packCBZ(chapterNo int, volumeName, chapterName, bookDataPath, chapterTempPa
 			return err
 		}
 		fw.Write(in)
-		seelog.Info("归档图片成功："+cbzName)
+		seelog.Debug("归档图片成功")
 	}
+	seelog.Info("归档图片成功："+cbzName)
 	return nil
 }

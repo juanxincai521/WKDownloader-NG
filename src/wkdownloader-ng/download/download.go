@@ -80,7 +80,7 @@ func downloadImg(bookNo int, chapterNo int, img *data.Img) {
 		if err != nil {
 			seelog.Warnf("%s，尝试第%d次失败，错误原因：%s", filePath, i, err.Error())
 		} else {
-			seelog.Infof("%s，尝试第%d次，下载成功", filePath, i)
+			seelog.Debugf("%s，尝试第%d次，下载成功", filePath, i)
 			return
 		}
 	}

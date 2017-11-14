@@ -152,7 +152,7 @@ func parsePage(bookNo int, chapterNo int) {
 		defer mutex.Unlock()
 		data.NewData.Pics[chapterNo] = chapterPic
 	}
-	seelog.Debugf("解析%d.htm成功，编号%d", chapterNo, bookNo)
+	seelog.Tracef("解析%d.htm成功，编号%d", chapterNo, bookNo)
 }
 
 func GetAndParsePage() error {
