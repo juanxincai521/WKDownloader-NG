@@ -265,7 +265,7 @@ func doPackAndRename() error {
 }
 
 func packCBZ(chapterNo int, volumeName, chapterName, bookDataPath, chapterTempPath string) error {
-	cbzName := strconv.Itoa(chapterNo) + "_" + utils.CleanFileName(volumeName+"_"+chapterName) + ".cbz"
+	cbzName := strconv.Itoa(chapterNo) + "_" + utils.CleanFileName(volumeName) + "_" + utils.CleanFileName(chapterName) + ".cbz"
 	cbzFile, err := os.Create(bookDataPath + "/" + cbzName)
 	defer cbzFile.Close()
 	seelog.Debug("建立压缩包：" + bookDataPath + "/" + cbzName)
