@@ -57,6 +57,9 @@ func CleanFileName(s string) string {
 	s = strings.Replace(s, `  )`, `)`, -1)
 	s = strings.Replace(s, ` )`, `)`, -1)
 	s = strings.Replace(s, `　`, ` `, -1)
+	s = strings.Replace(s, `．`, ` `, -1)
+	s = strings.Replace(s, `%`, ` `, -1)
+	s = strings.Replace(s, `％`, ` `, -1)
 	s = strings.TrimSpace(s)
 	return s
 }
