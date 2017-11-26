@@ -25,15 +25,30 @@ func CheckFolderAndMake(dirPath string) error {
 }
 
 func CleanFileName(s string) string {
+	// s = strings.Replace(s, "/", "／", -1)
+	// s = strings.Replace(s, ":", "：", -1)
+	// s = strings.Replace(s, "?", "？", -1)
+	// s = strings.Replace(s, "<", "《", -1)
+	// s = strings.Replace(s, ">", "》", -1)
+	// s = strings.Replace(s, "*", "", -1)
+	// s = strings.Replace(s, "|", "", -1)
+	// s = strings.Replace(s, `\`, "", -1)
+	// s = strings.Replace(s, `"`, "", -1)
+
+	// 为了让rclone和onedrive兼容，去掉标点符号
 	s = strings.Replace(s, "/", "／", -1)
-	s = strings.Replace(s, ":", "：", -1)
-	s = strings.Replace(s, ":", "：", -1)
-	s = strings.Replace(s, "?", "？", -1)
-	s = strings.Replace(s, "<", "《", -1)
-	s = strings.Replace(s, ">", "》", -1)
-	s = strings.Replace(s, "*", "", -1)
-	s = strings.Replace(s, "|", "", -1)
-	s = strings.Replace(s, `\`, "", -1)
-	s = strings.Replace(s, `"`, "", -1)
+	s = strings.Replace(s, ":", " ", -1)
+	s = strings.Replace(s, "：", " ", -1)
+	s = strings.Replace(s, "?", " ", -1)
+	s = strings.Replace(s, "？", " ", -1)
+	s = strings.Replace(s, "!", " ", -1)
+	s = strings.Replace(s, "！", " ", -1)
+	s = strings.Replace(s, "~", " ", -1)
+	s = strings.Replace(s, "<", " ", -1)
+	s = strings.Replace(s, ">", " ", -1)
+	s = strings.Replace(s, "*", " ", -1)
+	s = strings.Replace(s, "|", " ", -1)
+	s = strings.Replace(s, `\`, " ", -1)
+	s = strings.Replace(s, `"`, " ", -1)
 	return s
 }
