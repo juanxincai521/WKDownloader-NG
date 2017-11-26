@@ -55,5 +55,11 @@ func CleanFileName(s string) string {
 	s = strings.Replace(s, `  )`, `)`, -1)
 	s = strings.Replace(s, ` )`, `)`, -1)
 	s = strings.TrimSpace(s)
+	for {
+		if !strings.HasSuffix(s, ` `) {
+			break
+		}
+		s = strings.TrimSuffix(s, ` `)
+	}
 	return s
 }
