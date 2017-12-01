@@ -5,6 +5,6 @@ import (
 )
 
 func UploadToOnedrive() error {
-	cmd := exec.Command("/home/jason/WKDownloader-NG/sync-to-onedrive.sh >/home/jason/WKDownloader-NG/logs/sync-to-onedrive.log 2>&1 &")
+	cmd := exec.Command("sh", "/home/jason/WKDownloader-NG/sync-to-onedrive.sh")
 	return cmd.Run()
 }
