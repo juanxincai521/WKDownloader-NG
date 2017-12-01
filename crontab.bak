@@ -1,0 +1,2 @@
+0 2 * * * /home/jason/WKDownloader-NG/cron.sh >/dev/null 2>&1 &
+0 3 * * 0 /home/jason/WKDownloader-NG/sync-to-hubic.sh >/home/jason/WKDownloader-NG/logs/sync-to-hubic.log 2>&1 &

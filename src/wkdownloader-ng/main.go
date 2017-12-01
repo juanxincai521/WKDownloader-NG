@@ -11,6 +11,7 @@ import (
 	"wkdownloader-ng/index"
 	"wkdownloader-ng/page"
 	"wkdownloader-ng/rename"
+	"wkdownloader-ng/upload"
 
 	"github.com/cihub/seelog"
 )
@@ -112,6 +113,15 @@ func main() {
 		panic(err.Error())
 	}
 	seelog.Info("数据整理完成")
+
+	// 上传到Onedrive
+	seelog.Info("开始上传到Onedrive")
+	err = upload.UploadToOnedrive()
+	if err != nil {
+		seelog.Error("上传到Onedrive失败：" + err.Error())
+		panic(err.Error())
+	}
+	seelog.Info("上传到Onedrive完成")
 
 	seelog.Info("任务结束")
 }
