@@ -134,7 +134,7 @@ func checkPicLink(page *data.Page) {
 	}
 	maximumPicNo += 100
 	a := page.BookNo / 1000
-	url := fmt.Sprintf("http://pic.wkcdn.com/pictures/%d/%d/%d/", a, page.BookNo, page.ChapterNo)
+	url := fmt.Sprintf("http://pic.wenku8.com/pictures/%d/%d/%d/", a, page.BookNo, page.ChapterNo)
 	seelog.Infof("%d-测试链接区间：min-%d,max-%d", page.ChapterNo, minimalPicNo, maximumPicNo)
 	for i := minimalPicNo; i < maximumPicNo; i++ {
 		if testurl(fmt.Sprintf("%s%d.%s", url, i, "jpg")) {
