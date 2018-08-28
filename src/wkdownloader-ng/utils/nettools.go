@@ -9,6 +9,7 @@ import (
 	"path"
 	"strconv"
 	"time"
+	"errors"
 )
 
 var (
@@ -65,6 +66,11 @@ func downloadFile(url string, filePath string) error {
 	_, err4 := io.Copy(file, res.Body)
 	if err4 != nil {
 		return err4
+	}
+
+	stat, err5 := file.Stat()
+	if err5 != nil || stat.Size() == 0 {
+		return errors.New("文件为空")
 	}
 	return nil
 }
