@@ -23,7 +23,7 @@ func downloadBook(no int, ext string) {
 	defer pool.Done()
 	seelog.Debugf("开始下载%d.%s", no, ext)
 	a := no / 1000
-	ftype := "txtgbk"
+	ftype := "txtutf8"
 	umdMark := ""
 	if ext == "umd" {
 		ftype = "umd"
@@ -73,7 +73,7 @@ func downloadImg(bookNo int, chapterNo int, img *data.Img) {
 	defer pool.Done()
 	seelog.Debugf("开始下载%d/%d/%d.%s", bookNo, chapterNo, img.ImgNo, img.Extend)
 	a := bookNo / 1000
-	url := fmt.Sprintf("http://pic.wenku8.com/pictures/%d/%d/%d/%d.%s", a, bookNo, chapterNo, img.ImgNo, img.Extend)
+	url := fmt.Sprintf("http://pic.wkcdn.com/pictures/%d/%d/%d/%d.%s", a, bookNo, chapterNo, img.ImgNo, img.Extend)
 	filePath := fmt.Sprintf("%s/%d/%d/%d.%s", data.TempPath+"/pic", bookNo, chapterNo, img.ImgNo, img.Extend)
 	for i := 1; i <= 100; i++ {
 		err := utils.Download(url, filePath)

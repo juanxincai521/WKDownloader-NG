@@ -33,7 +33,7 @@ func downloadPage(no int) {
 	chapterNo := no
 	seelog.Tracef("开始下载%d.htm，编号%d", chapterNo, bookNo)
 	a := bookNo / 1000
-	url := fmt.Sprintf("http://www.wenku8.com/novel/%d/%d/%d.htm", a, bookNo, chapterNo)
+	url := fmt.Sprintf("http://www.wenku8.net/novel/%d/%d/%d.htm", a, bookNo, chapterNo)
 	filePath := fmt.Sprintf("%s/%s/%d/%d.htm", data.TempPath, "page", bookNo, chapterNo)
 	_, err := os.Stat(filePath)
 	if err == nil {

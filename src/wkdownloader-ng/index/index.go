@@ -26,7 +26,7 @@ var (
 func downloadIndex(no int) {
 	seelog.Debugf("开始下载index.htm，编号%d", no)
 	a := no / 1000
-	url := fmt.Sprintf("http://www.wenku8.com/novel/%d/%d/index.htm", a, no)
+	url := fmt.Sprintf("http://www.wenku8.net/novel/%d/%d/index.htm", a, no)
 	filePath := fmt.Sprintf("%s/%s/%d.htm", data.TempPath, "cache", no)
 	for i := 1; i <= 100; i++ {
 		err := utils.Download(url, filePath)
