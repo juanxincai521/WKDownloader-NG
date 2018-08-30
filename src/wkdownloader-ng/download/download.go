@@ -23,7 +23,7 @@ func downloadBook(no int, ext string) {
 	defer pool.Done()
 	seelog.Debugf("开始下载%d.%s", no, ext)
 	a := no / 1000
-	ftype := "txtutf8"
+	ftype := "txtgbk"
 	umdMark := ""
 	if ext == "umd" {
 		ftype = "umd"
