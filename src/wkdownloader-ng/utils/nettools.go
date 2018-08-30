@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net"
@@ -9,7 +10,6 @@ import (
 	"path"
 	"strconv"
 	"time"
-	"errors"
 )
 
 var (
@@ -56,7 +56,7 @@ func downloadFile(url string, filePath string) error {
 	if err2 != nil {
 		return err2
 	}
-	defer file.Close()
+
 	res, err3 := GetDefaultHTTPClient().Client.Get(url)
 	if err3 != nil {
 		return err3
@@ -67,9 +67,15 @@ func downloadFile(url string, filePath string) error {
 	if err4 != nil {
 		return err4
 	}
+	file.Close()
 
-	stat, err5 := file.Stat()
-	if err5 != nil || stat.Size() == 0 {
+	check, err5 := os.Open(filePath)
+	defer check.Close()
+	if err5 != nil {
+		return err5
+	}
+	stat, err6 := check.Stat()
+	if err6 != nil || stat.Size() == 0 {
 		return errors.New("文件为空")
 	}
 	return nil
