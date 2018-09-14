@@ -6,6 +6,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"net/url"
 	"os"
 	"path"
 	"strconv"
@@ -14,6 +15,7 @@ import (
 
 var (
 	defaultHTTPClient *HTTPClient
+	proxyHTTPClient   *HTTPClient
 	testHTTPClient    *HTTPClient
 )
 
@@ -32,7 +34,10 @@ func GetFileSize(url string) int64 {
 
 func Download(url string, filePath string) error {
 	tmpFilePath := fmt.Sprintf("%s.tmp", filePath)
-	downloadFile(url, tmpFilePath)
+	downloadErr := downloadFile(url, tmpFilePath, false)
+	if downloadErr != nil {
+		return downloadErr
+	}
 	_, err := os.Stat(filePath)
 	if !os.IsNotExist(err) {
 		err2 := os.Remove(filePath)
@@ -47,22 +52,49 @@ func Download(url string, filePath string) error {
 	return nil
 }
 
-func downloadFile(url string, filePath string) error {
+func DownloadWithProxy(url string, filePath string) error {
+        tmpFilePath := fmt.Sprintf("%s.tmp", filePath)
+        downloadErr := downloadFile(url, tmpFilePath, true)
+        if downloadErr != nil {
+                return downloadErr
+        }
+        _, err := os.Stat(filePath)
+        if !os.IsNotExist(err) {
+                err2 := os.Remove(filePath)
+                if err2 != nil {
+                        return err2
+                }
+        }
+        err3 := os.Rename(tmpFilePath, filePath)
+        if err3 != nil {
+                return err3
+        }
+        return nil
+}
+
+func downloadFile(url string, filePath string, withProxy bool) error {
 	err := CheckFolderAndMake(path.Dir(filePath))
 	if err != nil {
 		return err
 	}
+
 	file, err2 := os.Create(filePath)
 	if err2 != nil {
 		return err2
 	}
 
-	res, err3 := GetDefaultHTTPClient().Client.Get(url)
+	var res *http.Response
+	var err3 error
+	if withProxy {
+		res, err3 = GetProxyHTTPClient().Client.Get(url)
+	} else {
+		res, err3 = GetDefaultHTTPClient().Client.Get(url)
+	}
 	if err3 != nil {
 		return err3
 	}
-
 	defer res.Body.Close()
+
 	_, err4 := io.Copy(file, res.Body)
 	if err4 != nil {
 		return err4
@@ -74,6 +106,7 @@ func downloadFile(url string, filePath string) error {
 	if err5 != nil {
 		return err5
 	}
+
 	stat, err6 := check.Stat()
 	if err6 != nil || stat.Size() == 0 {
 		return errors.New("文件为空")
@@ -109,6 +142,35 @@ func GetDefaultHTTPClient() *HTTPClient {
 		newDefaultHTTPClient()
 	}
 	return defaultHTTPClient
+}
+
+func newProxyHTTPClient() {
+	urlParser := url.URL{}
+	proxyUrl, _ := urlParser.Parse("http://127.0.0.1:8118")
+	proxyHTTPClient = &HTTPClient{}
+	proxyHTTPClient.Client = http.Client{
+		Transport: &http.Transport{
+			Proxy: http.ProxyURL(proxyUrl),
+			Dial: func(netw, addr string) (net.Conn, error) {
+				deadline := time.Now().Add(600 * time.Second)
+				c, err := net.DialTimeout(netw, addr, time.Second*5)
+				if err != nil {
+					return nil, err
+				}
+				c.SetDeadline(deadline)
+				return c, nil
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 5,
+		},
+	}
+}
+
+func GetProxyHTTPClient() *HTTPClient {
+	if proxyHTTPClient == nil {
+		newProxyHTTPClient()
+	}
+	return proxyHTTPClient
 }
 
 func newTestHTTPClient() {

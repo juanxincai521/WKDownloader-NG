@@ -38,6 +38,10 @@ func main() {
 	}
 	seelog.Info("解析配置文件完成")
 
+	// seelog.Info("设置代理")
+	// os.Setenv("http_proxy", "http://127.0.0.1:8118")
+	// os.Setenv("https_proxy", "http://127.0.0.1:8118")
+
 	// 下载index.htm
 	seelog.Info("开始下载index.htm")
 	err = index.GetAndParseIndex()
@@ -55,6 +59,10 @@ func main() {
 		panic(err.Error())
 	}
 	seelog.Info("下载并解析分页完成")
+
+	// os.Unsetenv("http_proxy")
+	// os.Unsetenv("https_proxy")
+	// seelog.Info("解除代理")
 
 	// 获取版权插图
 	seelog.Info("开始获取版权插图")

@@ -54,7 +54,7 @@ func downloadPage(no int) {
 		}
 	}
 	for i := 1; i <= 100; i++ {
-		err := utils.Download(url, filePath)
+		err := utils.DownloadWithProxy(url, filePath)
 		if err != nil {
 			seelog.Warnf("%d.htm，编号%d，尝试第%d次失败，错误原因：%s", chapterNo, bookNo, i, err.Error())
 		} else {

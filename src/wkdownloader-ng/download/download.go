@@ -78,6 +78,11 @@ func downloadImg(bookNo int, chapterNo int, img *data.Img) {
 	for i := 1; i <= 100; i++ {
 		err := utils.Download(url, filePath)
 		if err != nil {
+			if err.Error() == "文件为空" {
+				seelog.Warnf("图片%s，文件为空", filePath)			
+				os.Remove(filePath)
+				return
+			}
 			seelog.Warnf("%s，尝试第%d次失败，错误原因：%s", filePath, i, err.Error())
 		} else {
 			seelog.Debugf("%s，尝试第%d次，下载成功", filePath, i)
@@ -87,7 +92,7 @@ func downloadImg(bookNo int, chapterNo int, img *data.Img) {
 	os.Remove(filePath)
 	seelog.Errorf("%s", url)
 	seelog.Warnf("%s，下载失败", filePath)
-	fail = true
+	// fail = true
 }
 
 func DownloadTXT() error {

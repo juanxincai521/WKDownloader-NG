@@ -29,7 +29,7 @@ func downloadIndex(no int) {
 	url := fmt.Sprintf("http://www.wenku8.net/novel/%d/%d/index.htm", a, no)
 	filePath := fmt.Sprintf("%s/%s/%d.htm", data.TempPath, "cache", no)
 	for i := 1; i <= 100; i++ {
-		err := utils.Download(url, filePath)
+		err := utils.DownloadWithProxy(url, filePath)
 		if err != nil {
 			seelog.Warnf("index.htm，编号%d，尝试第%d次失败，错误原因：%s", no, i, err.Error())
 		} else {
